@@ -166,6 +166,25 @@ public class RouteTest {
   }
 
   @Test
+  public void testRoute3() {
+    Route oldRoute = new Route(1, 2, 7, 9, 1);
+    route.setStartX(1);
+    route.setStartY(2);
+    route.setEndX(7);
+    route.setEndY(9);
+    route.setFtlSpeed(1);
+    assertEquals(route.getDistance(), oldRoute.getDistance());
+    while (!oldRoute.isEndReached()) {
+      assertEquals(route.getX(), oldRoute.getX());
+      assertEquals(route.getY(), oldRoute.getY());
+      route.makeNextMove();
+      oldRoute.makeNextMove();
+    }
+    
+  }
+
+  
+  @Test
   public void testIsDefending() {
     route.setStartX(3);
     route.setStartY(3);

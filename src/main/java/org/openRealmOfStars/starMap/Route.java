@@ -45,6 +45,9 @@ public class Route {
    * End Y coordinate
    */
   private double endY;
+  
+  private double mx;
+  private double my;
 
   /**
    * FTL speed
@@ -61,6 +64,18 @@ public class Route {
    */
   public static final int ROUTE_FIX = -1;
 
+  private boolean fixed = true;
+  
+  
+  public boolean isFixed() {
+    return fixed;
+  }
+
+  
+  public void setFixed(boolean fixed) {
+    this.fixed = fixed;
+  }
+
   /**
    * Constructor for route
    * @param sx Start X coordinate
@@ -75,6 +90,18 @@ public class Route {
     this.startY = sy;
     this.endX = ex;
     this.endY = ey;
+    int distance = getDistance();
+    if (distance > 0) {
+      mx = (endX - startX) / distance;
+    } else {
+      mx = 0;
+    }
+
+    if (distance > 0) {
+      my = (endY - startY) / distance;
+    } else {
+      my = 0;
+    }
     this.ftlSpeed = speed;
   }
 
@@ -278,14 +305,17 @@ public class Route {
    * @return internal movement speed
    */
   public double getMx() {
-    int distance = getDistance();
-    double mx;
-    if (distance > 0) {
-      mx = (endX - startX) / distance;
-    } else {
-      mx = 0;
+    if (!fixed) {
+      int distance = getDistance();
+      double mx;
+      if (distance > 0) {
+        mx = (endX - startX) / distance;
+      } else {
+        mx = 0;
+      }
+      return mx;
     }
-    return mx;
+    return this.mx;
   }
 
   /**
@@ -293,14 +323,17 @@ public class Route {
    * @return internal movement speed
    */
   public double getMy() {
-    int distance = getDistance();
-    double my;
-    if (distance > 0) {
-      my = (endY - startY) / distance;
-    } else {
-      my = 0;
+    if (!fixed) {
+      int distance = getDistance();
+      double my;
+      if (distance > 0) {
+        my = (endY - startY) / distance;
+      } else {
+        my = 0;
+      }
+      return my;
     }
-    return my;
+    return this.my;
   }
 
   /**
